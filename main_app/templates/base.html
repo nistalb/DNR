@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self-Cost Statement</title>
+</head>
+<body>
+    <header>
+        <h1>Self-Cost Statement</h1>
+        <a href="{% url 'logout' %}">Logout</a>
+    </header>
+
+    {% block content%}
+    {% endblock %}
+    
+    <footer>
+        <p>DNR Cost Statement</p>
+    </footer>
+</body>
+</html>

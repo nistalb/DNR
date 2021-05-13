@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>hello project edit</h1>
+
+<form action="{% url 'project_edit' %}" method="post">
+    {% csrf_token %}
+    <div>
+        <label for="">Description:</label>
+        {{project_form.description}}
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Hello World.</h1>
+<p>{{ user.first_name }} has landed</p>
+<p>{{ project.description }}</p>
+<p>{{ project.date }}</p>
+<a href="{% url 'project_edit' %} ">Edit</a>
+
+{% endblock %}
