@@ -12,3 +12,8 @@ class ProjectForm(ModelForm):
     class Meta:
         model = Project
         fields = ('description', 'date', 'url', 'street', 'city', 'state', 'zip_code')
+
+class LaborForm(ModelForm):
+    class Meta:
+        model = Labor
+        fields = ('date', 'total_hours', 'chainsaw_hours', 'small_equip_hours', 'large_equip_hours')

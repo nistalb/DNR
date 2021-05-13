@@ -26,7 +26,7 @@ class Labor(models.Model):
     project =  models.ForeignKey(Project, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.date
+        return str(self.date)
     
 class Rental(models.Model):
     equipment = models.CharField(max_length=200)

@@ -3,7 +3,7 @@ from django.contrib.auth import login
 
 # import forms
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import NewUserForm, ProjectForm
+from .forms import NewUserForm, ProjectForm, LaborForm
 
 # import models
 from .models import User, Project, Labor, Rental
@@ -26,14 +26,32 @@ def register(request):
     registration_form = NewUserForm()
     auth_form = AuthenticationForm()
     context = {'registration_form': registration_form, 'auth_form': auth_form}
-    return render(request, 'register.html', context)
+    return render(request, 'register/register.html', context)
+
+def register_edit(request):
+    user = User.objects.get(id=request.user.id)
+    if request.method == 'POST':
+        user.first_name = request.POST['first_name']
+        user.last_name = request.POST['last_name']
+        user.email = request.POST['email']
+        user.username = request.POST['username']
+        user.save()  
+        return redirect('landing')
+
+    user_form = NewUserForm(instance=user)
+    context = {'user_form': user_form}
+    return render(request, 'register/edit.html', context)
 
 # ==== LANDING ====
 def landing(request):
     
     user = User.objects.get(id=request.user.id)
     project = Project.objects.get(user_id=request.user.id)
-    context = {'user': user, 'project': project}
+    labor = Labor.objects.filter(project_id=project.id).order_by('date')
+    print(labor)
+    print('here')
+    labor_form = LaborForm()
+    context = {'user': user, 'project': project, 'labor_form': labor_form, 'labor': labor}
     return render(request, 'landing.html', context)
 
 # ==== PROJECT ====
@@ -52,7 +70,24 @@ def project_create(request):
 
 def project_edit(request):
     project = Project.objects.get(user_id=request.user.id)
+    if request.method == 'POST':
+        project_form = ProjectForm(request.POST, instance=project)
+        if project_form.is_valid:
+            project_form.save()
+            return redirect('landing')
 
     project_form = ProjectForm(instance=project)
     context = {'project_form': project_form, 'project': project}
     return render(request, 'project/edit.html', context)
+
+# ==== LABOR ====
+def labor_create(request):
+    # New Labor form is in landing route
+    project = Project.objects.get(user_id=request.user.id)
+    if request.method == 'POST':
+        labor_form = LaborForm(request.POST)
+        if labor_form.is_valid:
+            labor = labor_form.save(commit=False)
+            labor.project = project
+            labor.save()
+            return redirect('landing')

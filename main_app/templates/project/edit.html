@@ -8,6 +8,20 @@
     <div>
         <label for="">Description:</label>
         {{project_form.description}}
+        <label for="">Date:</label>
+        {{project_form.date}}
+        <label for="">Street:</label>
+        {{project_form.street}}
+        <label for="">City:</label>
+        {{project_form.city}}
+        <label for="">State:</label>
+        {{project_form.state}}
+        <label for="">Zip Code:</label>
+        {{project_form.zip_code}}
     </div>
+    <input type="submit" value="Make Changes">
+    <a href="{% url 'landing' %}">
+        <button>Cancel</button>
+    </a>
 </form>
 {% endblock %}

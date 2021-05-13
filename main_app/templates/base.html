@@ -5,17 +5,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    {% comment %} CSS from Static File {% endcomment %}
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+
     <title>Self-Cost Statement</title>
 </head>
 <body>
     <header>
-        <h1>Self-Cost Statement</h1>
-        <a href="{% url 'logout' %}">Logout</a>
+        <div>
+            <h1 id="header_title">Self-Cost Statement</h1>
+            <div id="header_links">
+                <a href="{% url 'logout' %}">Logout</a>
+            </div>
+        </div>
     </header>
-
-    {% block content%}
-    {% endblock %}
-    
+    <div class="container">
+        {% block content%}
+        {% endblock %}
+    </div>
     <footer>
         <p>DNR Cost Statement</p>
     </footer>
