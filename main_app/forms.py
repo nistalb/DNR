@@ -11,7 +11,7 @@ class NewUserForm(UserCreationForm):
 class ProjectForm(ModelForm):
     class Meta:
         model = Project
-        fields = ('description', 'date', 'url', 'street', 'city', 'state', 'zip_code')
+        fields = ('description', 'date', 'url', 'street', 'city', 'state', 'zip_code', 'reimbursement', 'expiration_date')
 
 class LaborForm(ModelForm):
     class Meta:

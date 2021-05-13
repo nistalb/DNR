@@ -12,6 +12,8 @@ class Project(models.Model):
     city = models.CharField(max_length=200)
     state = models.CharField(max_length=200)
     zip_code = models.CharField(max_length=11)
+    reimbursement = models.DecimalField(max_digits=6, decimal_places=2)
+    expiration_date = models.DateField(null=True, help_text='Date cost share agreement expires')
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):

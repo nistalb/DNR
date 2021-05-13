@@ -4,7 +4,9 @@
 <div>
     <h3>Project Owner: {{ user.first_name }} {{user.last_name}}.</h3>
     <p>Project Description: {{ project.description }} </p>
-    <p>Initiated on: {{ project.date }}</p>
+    <p>Initiated On: {{ project.date }}</p>
+    <p>Expiration Date: {{ project.expiration_date }}</p>
+    <p>Reimbursement Target: ${{ project.reimbursement }}</p>
 </div>
 <div>
 <p>Address:</p>
@@ -12,8 +14,7 @@
 <p>{{ project.city }}, {{ project.state }} {{ project.zip_code }}</p>
 </div>
 
-<a href="{% url 'project_edit' %} ">Edit Project</a>
-<a href="{% url 'register_edit' %}">Edit User Information</a>
+
 <div>
     <form action="{% url 'labor_create' %}" method="post">
         {% csrf_token %}
@@ -33,7 +34,9 @@
         </thead>
         {% for labor in labor %}
             <tr>
-                <td>{{ labor.date }}</td>
+                <td>
+                    <a href="{% url 'labor_edit' labor_id=labor.id %}">{{ labor.date }}</a> 
+                </td>
                 <td>{{ labor.total_hours }}</td>
                 <td>{{ labor.chainsaw_hours }}</td>
                 <td>{{ labor.small_equip_hours }}</td>
@@ -41,6 +44,7 @@
             </tr>
         {% endfor %}
     </table>
+    <p>* Click on a date to edit the entry</p>
 </div>
 
 {% endblock %}

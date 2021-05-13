@@ -10,4 +10,6 @@ path('landing/', views.landing, name='landing'),
 path('project/create', views.project_create, name='project_create'),
 path('project/edit', views.project_edit, name='project_edit'),
 path('labor/create', views.labor_create, name='labor_create'),
+path('labor/<int:labor_id>/edit', views.labor_edit, name='labor_edit'),
+
 ]

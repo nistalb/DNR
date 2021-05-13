@@ -44,7 +44,6 @@ def register_edit(request):
 
 # ==== LANDING ====
 def landing(request):
-    
     user = User.objects.get(id=request.user.id)
     project = Project.objects.get(user_id=request.user.id)
     labor = Labor.objects.filter(project_id=project.id).order_by('date')
@@ -91,3 +90,15 @@ def labor_create(request):
             labor.project = project
             labor.save()
             return redirect('landing')
+
+def labor_edit(request, labor_id):
+    labor = Labor.objects.get(id=labor_id)
+    if request.method == 'POST':
+        labor_form = LaborForm(request.POST, instance=labor)
+        if labor_form.is_valid:
+            labor_form.save()
+            return redirect('landing')
+
+    labor_form = LaborForm(instance=labor)
+    context = {'labor_form': labor_form, 'labor': labor}
+    return render(request, 'labor/edit.html', context)

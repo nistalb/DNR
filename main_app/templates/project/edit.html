@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>hello project edit</h1>
+<h2>Project Edit</h2>
 
 <form action="{% url 'project_edit' %}" method="post">
     {% csrf_token %}
@@ -10,6 +10,10 @@
         {{project_form.description}}
         <label for="">Date:</label>
         {{project_form.date}}
+        <label for="">Reimbursement Amount:</label>
+        {{project_form.reimbursement}}
+        <label for="">Expiration Date:</label>
+        {{project_form.expiration_date}}
         <label for="">Street:</label>
         {{project_form.street}}
         <label for="">City:</label>

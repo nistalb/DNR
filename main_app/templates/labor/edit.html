@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Edit labor entry</h2>
+
+<form action="{% url 'labor_edit' labor.id %}" method="POST">
+    {% csrf_token %}
+    {{ labor_form.as_p }}
+    <input type="submit" value="Submit">
+    <a href="{% url 'landing' %}">
+        <button>Cancel</button>
+    </a>
+</form>
+
+{% endblock %}
