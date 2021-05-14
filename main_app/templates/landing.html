@@ -19,7 +19,7 @@
     <form action="{% url 'labor_create' %}" method="post">
         {% csrf_token %}
         <h4>Add Labor</h4>
-        <table border='1'>
+        <table class="table table-bordered">
             <thead>
                 <th>Date</th>
                 <th>Total Hours</th>
@@ -40,8 +40,8 @@
 </div>
 
 {% if labor %}
-<div class="form">
-    <table border='1'>
+<div>
+    <table class="table table-bordered">
         <thead>
             <th>Date</th>
             <th>Total Hours</th>
@@ -76,10 +76,10 @@
 
 {% if rental %}
 <div class="form">
-    <table border='1'>
+    <table class="table table-bordered">
         <thead>
             <th>Equipment</th>
-            <th>Cost</th>
+            <th>Cost ($)</th>
             <th>Start Date</th>
             <th>End Date</th>
         </thead>
