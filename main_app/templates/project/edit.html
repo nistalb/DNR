@@ -23,9 +23,7 @@
         <label for="">Zip Code:</label>
         {{project_form.zip_code}}
     </div>
-    <input type="submit" value="Make Changes">
-    <a href="{% url 'landing' %}">
-        <button>Cancel</button>
-    </a>
+    <input class="btn btn-primary" type="submit" value="Make Changes">
+    <a class="btn btn-secondary" href="{% url 'landing' %}">Cancel</a>
 </form>
 {% endblock %}

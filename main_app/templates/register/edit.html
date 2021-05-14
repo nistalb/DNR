@@ -15,10 +15,8 @@
         <label for="">Email Address:</label>
         {{user_form.email}}
     </div>
-    <input type="submit" value="Update">
-    <a href="{% url 'landing' %}">
-        <button>Cancel</button>
-    </a>
+    <input class="btn btn-primary" type="submit" value="Update">
+    <a class="btn btn-secondary" href="{% url 'landing' %}">Cancel</a>
 </form>
 
 {% endblock %}
