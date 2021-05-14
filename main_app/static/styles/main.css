@@ -22,9 +22,15 @@ header {
     padding: 0 15px 0 15px;
 }
 
+#header_links > a {
+    padding: 0 5px 0 5px;
+    text-decoration: none;
+    color: black;
+}
+
 .container {
     overflow-y: auto;
-    overflow-x: hidden;
+    overflow-x: auto;
     min-width: 370px;
 }
 
@@ -34,4 +40,8 @@ footer {
     bottom: 0;
     width: 100%;
     text-align: center;
+}
+
+.form {
+    padding: 20px;
 }

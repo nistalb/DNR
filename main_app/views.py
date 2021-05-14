@@ -3,7 +3,7 @@ from django.contrib.auth import login
 
 # import forms
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import NewUserForm, ProjectForm, LaborForm
+from .forms import NewUserForm, ProjectForm, LaborForm, RentalForm
 
 # import models
 from .models import User, Project, Labor, Rental
@@ -47,10 +47,10 @@ def landing(request):
     user = User.objects.get(id=request.user.id)
     project = Project.objects.get(user_id=request.user.id)
     labor = Labor.objects.filter(project_id=project.id).order_by('date')
-    print(labor)
-    print('here')
+    rental = Rental.objects.filter(project_id=project.id).order_by('start_date')
     labor_form = LaborForm()
-    context = {'user': user, 'project': project, 'labor_form': labor_form, 'labor': labor}
+    rental_form = RentalForm()
+    context = {'user': user, 'project': project, 'labor_form': labor_form, 'labor': labor, 'rental_form': rental_form, 'rental': rental}
     return render(request, 'landing.html', context)
 
 # ==== PROJECT ====
@@ -102,3 +102,26 @@ def labor_edit(request, labor_id):
     labor_form = LaborForm(instance=labor)
     context = {'labor_form': labor_form, 'labor': labor}
     return render(request, 'labor/edit.html', context)
+
+# ==== RENTAL ====
+def rental_create(request):
+    project = Project.objects.get(user_id=request.user.id)
+    if request.method == 'POST':
+        rental_form = RentalForm(request.POST)
+        if rental_form.is_valid:
+            rental = rental_form.save(commit=False)
+            rental.project = project
+            rental.save()
+            return redirect('landing')
+
+def rental_edit(request, rental_id):
+    rental = Rental.objects.get(id=rental_id)
+    if request.method == 'POST':
+        rental_form = RentalForm(request.POST, instance=rental)
+        if rental_form.is_valid:
+            rental_form.save()
+            return redirect('landing')
+
+    rental_form = RentalForm(instance=rental)
+    context = {'rental_form': rental_form, 'rental': rental}
+    return render(request, 'rental/edit.html', context)

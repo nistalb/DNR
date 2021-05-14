@@ -34,7 +34,7 @@ class Rental(models.Model):
     equipment = models.CharField(max_length=200)
     cost = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
     start_date = models.DateField(default=date.today)
-    end_date = models.DateField()
+    end_date = models.DateField(default=date.today)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
     def __str__(self):

@@ -17,3 +17,8 @@ class LaborForm(ModelForm):
     class Meta:
         model = Labor
         fields = ('date', 'total_hours', 'chainsaw_hours', 'small_equip_hours', 'large_equip_hours')
+
+class RentalForm(ModelForm):
+    class Meta:
+        model = Rental
+        fields = ('equipment', 'cost', 'start_date', 'end_date')

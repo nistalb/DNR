@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Edit Rental entry</h2>
+
+<form action="{% url 'rental_edit' rental.id %}" method="POST">
+    {% csrf_token %}
+    {{ rental_form.as_p }}
+    <input type="submit" value="Submit">
+    <a href="{% url 'landing' %}">
+        <button>Cancel</button>
+    </a>
+</form>
+
+{% endblock %}
