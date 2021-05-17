@@ -1,8 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Hello World</h2>
 
-<a href="/register">Register</a>
+<div class="hero">
+    <div id="home">
+        <h1>Labor Tracking Made Easy</h1>
+        <p>Record hours spent and rental costs in one easy website.</p>
+        <a id="register_btn"class="btn btn-secondary" href="{% url 'register' %}">Login / Register</a>
+    </div>
+</div>
+
 
 {% endblock %}

@@ -2,17 +2,19 @@
 
 {% block content %}
 
-<form action="{% url 'register' %}" method="POST">
-    {% csrf_token %}
-    {{registration_form.as_p}}
-    <button class="btn btn-primary" type="submit">Register</button>
-</form>
-<br>
-<br>
-<form action="{% url 'login' %}" method="POST">
-    {% csrf_token %}
-    {{auth_form.as_p}}
-    <button class="btn btn-primary" type="submit">Login</button>
-</form>
+<div id="content" class="container">
+    <form action="{% url 'register' %}" method="POST">
+        {% csrf_token %}
+        {{registration_form.as_p}}
+        <button class="btn btn-primary" type="submit">Register</button>
+    </form>
+    <br>
+    <br>
+    <form action="{% url 'login' %}" method="POST">
+        {% csrf_token %}
+        {{auth_form.as_p}}
+        <button class="btn btn-primary" type="submit">Login</button>
+    </form>
+</div>
 
 {% endblock %}

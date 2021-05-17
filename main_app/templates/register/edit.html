@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content%}
 
+<div id="content" class="container">
 <h2>User Edit</h2>
 
 <form action="{% url 'register_edit' %}" method="post">
@@ -18,5 +19,6 @@
     <input class="btn btn-primary" type="submit" value="Update">
     <a class="btn btn-secondary" href="{% url 'landing' %}">Cancel</a>
 </form>
+</div>
 
 {% endblock %}

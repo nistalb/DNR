@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h2>Edit labor entry</h2>
+<div id="content" class="container">
+    <h2>Edit labor entry</h2>
 
-<form action="{% url 'labor_edit' labor.id %}" method="POST">
-    {% csrf_token %}
-    {{ labor_form.as_p }}
-    <input type="submit" value="Submit">
-    <a href="{% url 'landing' %}">
-        <button>Cancel</button>
-    </a>
-</form>
+    <form action="{% url 'labor_edit' labor.id %}" method="POST">
+        {% csrf_token %}
+        {{ labor_form.as_p }}
+        <input class="btn btn-primary" type="submit" value="Submit">
+        <a class="btn btn-secondary" href="{% url 'landing' %}">Cancel</a>
+    </form>
+</div>
 
 {% endblock %}
