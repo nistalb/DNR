@@ -1,12 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div id="content" class="container">
-    <h2>Edit labor entry</h2>
+<div  class="container edit_form">
+    <h2>Edit Labor Entry</h2>
 
     <form action="{% url 'labor_edit' labor.id %}" method="POST">
         {% csrf_token %}
-        {{ labor_form.as_p }}
+        
+        {% for field in labor_form %}
+           <div class="mb-3">
+              {{ field.label_tag}}
+              {{ field }}
+           </div> 
+        {% endfor %}
+        
         <input class="btn btn-primary" type="submit" value="Submit">
         <a class="btn btn-secondary" href="{% url 'landing' %}">Cancel</a>
     </form>

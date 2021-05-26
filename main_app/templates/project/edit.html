@@ -1,31 +1,54 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div id="content" class="container">
-    <h2>Project Edit</h2>
+<div class="container edit_form">
+    <h2>Edit Project</h2>
 
-    <form action="{% url 'project_edit' %}" method="post">
+    <form class="row g-3" action="{% url 'project_edit' %}" method="post">
         {% csrf_token %}
-        <div>
-            <label for="">Description:</label>
-            {{project_form.description}}
-            <label for="">Date:</label>
-            {{project_form.date}}
-            <label for="">Reimbursement Amount:</label>
-            {{project_form.reimbursement}}
-            <label for="">Expiration Date:</label>
-            {{project_form.expiration_date}}
-            <label for="">Street:</label>
-            {{project_form.street}}
-            <label for="">City:</label>
-            {{project_form.city}}
-            <label for="">State:</label>
-            {{project_form.state}}
-            <label for="">Zip Code:</label>
-            {{project_form.zip_code}}
+        
+        <div class="col-12">
+                <label for="" class="form-label">{{ project_form.description.label_tag }}</label> 
+                {{ project_form.description }}
         </div>
-        <input class="btn btn-primary" type="submit" value="Make Changes">
-        <a class="btn btn-secondary" href="{% url 'landing' %}">Cancel</a>
+        <div class="col-12">
+                <label for="" class="form-label">{{ project_form.date.label_tag }}</label> 
+                {{ project_form.date }}
+        </div>
+        <div class="col-12">
+                <label for="" class="form-label">{{ project_form.url.label_tag }}</label> 
+                {{ project_form.url }}
+        </div>
+        <div class="col-md-6">
+                <label for="" class="form-label">{{ project_form.street.label_tag }}</label> 
+                {{ project_form.street }}
+        </div>
+        <div class="col-md-6">
+                <label for="" class="form-label">{{ project_form.city.label_tag }}</label> 
+                {{ project_form.city }}
+        </div>
+        <div class="col-md-6">
+                <label for="" class="form-label">{{ project_form.state.label_tag }}</label> 
+                {{ project_form.state }}
+        </div>
+        <div class="col-md-6">
+                <label for="" class="form-label">{{ project_form.zip_code.label_tag }}</label> 
+                {{ project_form.zip_code }}
+        </div>
+        <div class="col-md-6">
+                <label for="" class="form-label">{{ project_form.reimbursement.label_tag }}</label> 
+                {{ project_form.reimbursement }}
+        </div>
+        <div class="col-md-6">
+                <label for="" class="form-label">{{ project_form.expiration_date.label_tag }}</label> 
+                {{ project_form.expiration_date }}
+        </div>
+
+        <div class="col-12">
+            <input class="btn btn-primary" type="submit" value="Make Changes">
+            <a class="btn btn-secondary" href="{% url 'landing' %}">Cancel</a>
+        </div>
+        
     </form>
 </div>
 
