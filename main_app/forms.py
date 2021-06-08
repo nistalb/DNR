@@ -16,19 +16,17 @@ class ProjectForm(ModelForm):
         model = Project
         fields = ('description', 'date', 'url', 'street', 'city', 'state', 'zip_code', 'reimbursement', 'expiration_date')
         labels = {'date': 'Date Initiated', 'url': 'PDF Upload'}
-        widgets = {'url': FileInput}
+        widgets = {'url': FileInput,
+                    'date': DateInput(attrs={'class': 'datepicker'}),
+                    'expiration_date': DateInput(attrs={'class': 'datepicker'}),
+                    }
         
 
 class LaborForm(ModelForm):
     class Meta:
         model = Labor
         fields = ('date', 'total_hours', 'chainsaw_hours', 'small_equip_hours', 'large_equip_hours')
-        widgets = {'date': DateInput(attrs={'class': 'datepicker form-control'}),
-                    'total_hours': NumberInput(attrs={'class': 'form-control'}),
-                    'chainsaw_hours': NumberInput(attrs={'class': 'form-control'}),
-                    'small_equip_hours': NumberInput(attrs={'class': 'form-control'}),
-                    'large_equip_hours': NumberInput(attrs={'class': 'form-control'}),
-                    }
+        widgets = {'date': DateInput(attrs={'class': 'datepicker'}),}
         labels = {'small_equip_hours': 'Small equipment hours', 'large_equip_hours': 'Large equipment hours'}
 
 class RentalForm(ModelForm):

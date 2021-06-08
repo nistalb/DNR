@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from django.views.generic import CreateView, UpdateView, TemplateView
+from django.views.generic import CreateView, UpdateView, TemplateView, DeleteView
 from django.urls import reverse_lazy
 
 from django.db.models import Sum
@@ -79,17 +79,16 @@ def labor_create(request):
     context = {'labor_form': labor_form, 'labor': labor}
     return render(request, 'labor/create.html', context)
 
-def labor_edit(request, labor_id):
-    labor = Labor.objects.get(id=labor_id)
-    if request.method == 'POST':
-        labor_form = LaborForm(request.POST, instance=labor)
-        if labor_form.is_valid:
-            labor_form.save()
-            return redirect('labor_create')
+class LaborUpdateView(UpdateView):
+    model = Labor
+    form_class = LaborForm
+    success_url = reverse_lazy('labor_create')
+    template_name = 'labor/edit.html'
 
-    labor_form = LaborForm(instance=labor)
-    context = {'labor_form': labor_form, 'labor': labor}
-    return render(request, 'labor/edit.html', context)
+class LaborDeleteView(DeleteView):
+    model = Labor
+    success_url = reverse_lazy('labor_create')
+    # uses default template at main_app/labor_confirm_delete.html
 
 # ==== RENTAL ====
 def rental_create(request):

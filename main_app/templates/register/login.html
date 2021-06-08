@@ -2,18 +2,20 @@
 {% load bootstrap4 %}
 
 {% block content %}
-    <div class="container">
-        <h1>Log In</h1>
+    <div class="container edit_form">
+        <h1 class='row justify-content-center mt-4'>Log In</h1>
         <form class='form' method="POST">
             {% csrf_token %}
             {% bootstrap_form form %}
             {% buttons %}
-                <button type='submit' class='btn btn-primary'>Login</button>
+                <div class='row justify-content-center'>
+                    <button type='submit' class='btn btn-primary'>Login</button>
+                </div>
             {% endbuttons %}
         </form>
-        <hr class='mt-5 mb-3'>
-        <p>Not a member yet?<span>
-            <a href="{% url 'register' %}"> Register</a>
+        <hr class='mt-4 mb-3'>
+        <p class='row justify-content-center'>Not a member yet?<span>
+            <a href="{% url 'register' %}">&nbsp Register</a>
         </span></p>
     </div>
     

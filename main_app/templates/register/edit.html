@@ -4,7 +4,7 @@
 {% block content%}
 
 <div class="container edit_form">
-    <h2>Edit User Information</h2>
+    <h2 class='row justify-content-center mt-4'>Edit User Information</h2>
 
     <form method="POST">
         {% csrf_token %}
@@ -27,8 +27,10 @@
         </div>
         
         {% buttons %}
-            <input class="btn btn-primary" type="submit" value="Update">
-            <a class="btn btn-secondary" href="{% url 'landing' %}">Cancel</a>
+            <div class="row justify-content-center">
+                <input class="btn btn-primary mx-1" type="submit" value="Update">
+                <a class="btn btn-secondary mx-1" href="{% url 'landing' %}">Cancel</a>
+            </div>
         {% endbuttons %}
     </form>
 </div>

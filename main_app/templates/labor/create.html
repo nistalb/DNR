@@ -3,9 +3,9 @@
 {% block content %}
 <div class="container">
     <div class="form">
-        <form action="{% url 'labor_create' %}" method="post">
+        <form action="{% url 'labor_create' %}" method="POST">
             {% csrf_token %}
-            <h4>Add Labor</h4>
+            <h2 class='row justify-content-center mt-4'>Add Labor</h2>
             <table class="table table-bordered">
                 <thead>
                     <th>Date</th>
@@ -20,15 +20,17 @@
                     <td>{{ labor_form.chainsaw_hours }}</td>
                     <td>{{ labor_form.small_equip_hours }}</td>
                     <td>{{ labor_form.large_equip_hours }}</td>
+                    
                 </tr>
             </table>
-            <input type="submit" value='Submit'>
+            <div class="row justify-content-center">
+                <input class='btn btn-primary' type="submit" value='Submit'>
+            </div>
         </form>
     </div>
 
-
-
     <div>
+        <h2 class="row justify-content-center mt-5">Labor Log</h2>
         <table class="table table-bordered">
             <thead>
                 <th>Date</th>
@@ -36,21 +38,24 @@
                 <th>Chainsaw Hours</th>
                 <th>Small Equipment Hours</th>
                 <th>Large Equipment Hours</th>
+                <th></th>
             </thead>
             {% if labor %}
                 {% for labor in labor %}
                     <tr>
                         <td>
-                            <a href="{% url 'labor_edit' labor_id=labor.id %}">{{ labor.date }}</a> 
+                            <a href="{% url 'labor_edit' pk=labor.pk %}">{{ labor.date }}</a> 
                         </td>
                         <td>{{ labor.total_hours }}</td>
                         <td>{{ labor.chainsaw_hours }}</td>
                         <td>{{ labor.small_equip_hours }}</td>
                         <td>{{ labor.large_equip_hours }}</td>
+                        <td><a href="{% url 'labor_delete' pk=labor.pk %}">Delete</a></td>
                     </tr>
                 {% endfor %}
             {% else %}
                 <tr>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>

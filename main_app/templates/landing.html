@@ -3,7 +3,7 @@
 
 <div id="content" class="container">
     <div>
-        <h3>Project Owner: {{ user.first_name }} {{user.last_name}}</h3>
+        <h3>Project Owner: {{ user.first_name|capfirst }} {{user.last_name|capfirst}}</h3>
         <p>Project Description: {{ project.description }} </p>
         <p>Initiated On: {{ project.date }}</p>
         <p>Expiration Date: {{ project.expiration_date }}</p>

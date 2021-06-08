@@ -3,13 +3,11 @@
 
 {% block content %}
 
-<div id="content" class="container">
-    <h1>Project Information</h1>
+<div id="content" class="container edit_form">
+    <h1 class='row justify-content-center mt-4 mb-3'>Project Information</h1>
     
     {% if project.pk %}
-        <p>Edit your information.</p>
-    {% else %}
-        <p>Lets get some basic info about the project.</p>
+        <p class='row justify-content-center'>Edit your information.</p>
     {% endif %}
 
     <form class='form' enctype='multipart/form-data' method="POST">
@@ -53,10 +51,12 @@
         </div>
        
         {% buttons %}
-            <button type="submit" class='btn btn-primary'>Submit</button>
-            {% if project.pk %}
-                <a href="{% url 'landing' %}" class='btn btn-secondary'>Cancel</a>
-            {% endif %}
+            <div class="row justify-content-center">
+                <button type="submit" class='btn btn-primary mx-1'>Submit</button>
+                {% if project.pk %}
+                        <a href="{% url 'landing' %}" class='btn btn-secondary mx-1'>Cancel</a>
+                {% endif %}
+            </div>
         {% endbuttons %}
         
     </form>
