@@ -10,61 +10,14 @@
         <p>Reimbursement Target: ${{ project.reimbursement }}</p>
     </div>
     <div>
-    <p>Address:</p>
-    <p>{{ project.street }}</p>
-    <p>{{ project.city }}, {{ project.state }} {{ project.zip_code }}</p>
+        <p>Address: {{ project.street }}, {{ project.city }}, {{ project.state }} {{ project.zip_code }}</p>
+        <a href="{% url 'project_edit' pk=project.pk %}">Edit Project</a>
     </div>
 
 
-    <div class="form">
-        <form action="{% url 'labor_create' %}" method="post">
-            {% csrf_token %}
-            <h4>Add Labor</h4>
-            <table class="table table-bordered">
-                <thead>
-                    <th>Date</th>
-                    <th>Total Hours</th>
-                    <th>Chainsaw Hours</th>
-                    <th>Small Equipment Hours</th>
-                    <th>Large Equipment Hours</th>
-                </thead>
-                <tr>
-                    <td>{{ labor_form.date }}</td>
-                    <td>{{ labor_form.total_hours }}</td>
-                    <td>{{ labor_form.chainsaw_hours }}</td>
-                    <td>{{ labor_form.small_equip_hours }}</td>
-                    <td>{{ labor_form.large_equip_hours }}</td>
-                </tr>
-            </table>
-            <input type="submit" value='Submit'>
-        </form>
-    </div>
+    
 
-    {% if labor %}
-    <div>
-        <table class="table table-bordered">
-            <thead>
-                <th>Date</th>
-                <th>Total Hours</th>
-                <th>Chainsaw Hours</th>
-                <th>Small Equipment Hours</th>
-                <th>Large Equipment Hours</th>
-            </thead>
-            {% for labor in labor %}
-                <tr>
-                    <td>
-                        <a href="{% url 'labor_edit' labor_id=labor.id %}">{{ labor.date }}</a> 
-                    </td>
-                    <td>{{ labor.total_hours }}</td>
-                    <td>{{ labor.chainsaw_hours }}</td>
-                    <td>{{ labor.small_equip_hours }}</td>
-                    <td>{{ labor.large_equip_hours }}</td>
-                </tr>
-            {% endfor %}
-        </table>
-        <p>* Click on a date to edit the entry</p>
-    </div>
-    {% endif %}
+    
 
     <div class="form">
         <form action="{% url 'rental_create' %}" method="POST">

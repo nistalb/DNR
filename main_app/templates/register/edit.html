@@ -1,31 +1,36 @@
 {% extends 'base.html' %}
+{% load bootstrap4 %}
+
 {% block content%}
 
 <div class="container edit_form">
-<h2>Edit User Information</h2>
+    <h2>Edit User Information</h2>
 
-<form action="{% url 'register_edit' %}" method="post">
-    {% csrf_token %}
-    <div class='mb-3'>
-        {{user_form.username.label_tag}}
-        {{user_form.username}}
-    </div>
-    <div class='mb-3'>
-        {{user_form.first_name.label_tag}}
-        {{user_form.first_name}}
-    </div>
-    <div class='mb-3'>
-        {{user_form.last_name.label_tag}}
-        {{user_form.last_name}}
-    </div>  
-    <div class='mb-3'>
-        {{user_form.email.label_tag}}
-        {{user_form.email}}
-    </div>
-    
-    <input class="btn btn-primary" type="submit" value="Update">
-    <a class="btn btn-secondary" href="{% url 'landing' %}">Cancel</a>
-</form>
+    <form method="POST">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            {% bootstrap_field form.username %}
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                {% bootstrap_field form.first_name %}
+            </div>
+            <div class="form-group col-md-6">
+                {% bootstrap_field form.last_name %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {% bootstrap_field form.email %}
+        </div>
+        
+        {% buttons %}
+            <input class="btn btn-primary" type="submit" value="Update">
+            <a class="btn btn-secondary" href="{% url 'landing' %}">Cancel</a>
+        {% endbuttons %}
+    </form>
 </div>
 
 {% endblock %}

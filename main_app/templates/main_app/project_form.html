@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load  bootstrap4 %}
+
+{% block content %}
+
+<div id="content" class="container">
+    <h1>Project Information</h1>
+    
+    {% if project.pk %}
+        <p>Edit your information.</p>
+    {% else %}
+        <p>Lets get some basic info about the project.</p>
+    {% endif %}
+
+    <form class='form' enctype='multipart/form-data' method="POST">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            {% bootstrap_field form.description %}
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                {% bootstrap_field form.date %}
+            </div>
+            <div class="form-group col-md-6">
+                {% bootstrap_field form.expiration_date %}
+            </div>
+        </div>
+        
+        <div class="form-group">
+            {% bootstrap_field form.street %}
+        </div>
+            
+        <div class="form-row">
+            <div class="form-group col-md-5">
+                {% bootstrap_field form.city %}
+            </div>
+            <div class="form-group col-md-5">
+                {% bootstrap_field form.state %}
+            </div>
+            <div class="form-group col-md-2">
+                {% bootstrap_field form.zip_code %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {% bootstrap_field form.reimbursement placeholder='$$' %}
+        </div>
+
+        <div class="form-group">
+            {% bootstrap_field form.url %}
+        </div>
+       
+        {% buttons %}
+            <button type="submit" class='btn btn-primary'>Submit</button>
+            {% if project.pk %}
+                <a href="{% url 'landing' %}" class='btn btn-secondary'>Cancel</a>
+            {% endif %}
+        {% endbuttons %}
+        
+    </form>
+</div>
+
+{% endblock %}

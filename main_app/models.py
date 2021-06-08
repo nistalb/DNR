@@ -5,16 +5,16 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Project(models.Model):
-    description = models.CharField(max_length=500)
+    description = models.TextField(max_length=500)
     date = models.DateField()
-    url = models.URLField(max_length=200, blank=True, help_text='Add the pdf file from DNR describing the project.')
+    url = models.URLField(max_length=200, blank=True, null=True, help_text='Add the pdf file from DNR describing the project.')
     street = models.CharField(max_length=200)
     city = models.CharField(max_length=200)
     state = models.CharField(max_length=200)
     zip_code = models.CharField(max_length=11)
     reimbursement = models.DecimalField(max_digits=6, decimal_places=2)
     expiration_date = models.DateField(null=True, help_text='Date cost share agreement expires')
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    owner = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.description
@@ -29,6 +29,9 @@ class Labor(models.Model):
 
     def __str__(self):
         return str(self.date)
+
+    class Meta:
+        ordering = ['-date']
     
 class Rental(models.Model):
     equipment = models.CharField(max_length=200)
@@ -40,4 +43,5 @@ class Rental(models.Model):
     def __str__(self):
         return self.equipment
 
-    
+    class Meta:
+        ordering = ['-start_date']
