@@ -37,9 +37,7 @@ def landing(request):
         user = User.objects.get(id=request.user.id)
         project = Project.objects.get(owner_id=request.user.id)
         rental_sum = Rental.objects.filter(project_id=project.id).aggregate(Sum('cost'))['cost__sum']
-        rental = Rental.objects.filter(project_id=project.id)
-        rental_form = RentalForm()
-        context = {'user': user, 'project': project, 'rental_form': rental_form, 'rental': rental, 'rental_sum': rental_sum}
+        context = {'user': user, 'project': project, 'rental_sum': rental_sum}
         return render(request, 'landing.html', context)
     else:
         return redirect('project_create')
@@ -93,22 +91,26 @@ class LaborDeleteView(DeleteView):
 # ==== RENTAL ====
 def rental_create(request):
     project = Project.objects.get(owner_id=request.user.id)
+    rental = Rental.objects.filter(project_id=project.id)
     if request.method == 'POST':
         rental_form = RentalForm(request.POST)
         if rental_form.is_valid:
             rental = rental_form.save(commit=False)
             rental.project = project
             rental.save()
-            return redirect('landing')
+            return redirect('rental_create')
 
-def rental_edit(request, rental_id):
-    rental = Rental.objects.get(id=rental_id)
-    if request.method == 'POST':
-        rental_form = RentalForm(request.POST, instance=rental)
-        if rental_form.is_valid:
-            rental_form.save()
-            return redirect('landing')
-
-    rental_form = RentalForm(instance=rental)
+    rental_form = RentalForm()
     context = {'rental_form': rental_form, 'rental': rental}
-    return render(request, 'rental/edit.html', context)
+    return render(request, 'rental/create.html', context)
+
+class RentalUpdateView(UpdateView):
+    model = Rental
+    form_class = RentalForm
+    success_url = reverse_lazy('rental_create')
+    template_name = 'rental/edit.html'
+
+class RentalDeleteView(DeleteView):
+    model = Rental
+    success_url = reverse_lazy('rental_create')
+    # uses default template at main_app/rental_confirm_delete.html

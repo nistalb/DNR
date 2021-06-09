@@ -19,6 +19,7 @@ class ProjectForm(ModelForm):
         widgets = {'url': FileInput,
                     'date': DateInput(attrs={'class': 'datepicker'}),
                     'expiration_date': DateInput(attrs={'class': 'datepicker'}),
+                    'description': Textarea(attrs={'rows':3, 'cols':15})
                     }
         
 

@@ -1,21 +1,27 @@
 {% extends 'base.html' %}
+{% load bootstrap4%}
+
 {% block content %}
 
 <div class="container edit_form">
-    <h2>Edit Rental Entry</h2>
+    <h2 class='row justify-content-center mt-4'>Edit Rental Entry</h2>
 
-    <form action="{% url 'rental_edit' rental.id %}" method="POST">
+    <form method="POST">
         {% csrf_token %}
         
-        {% for field in rental_form %}
+        {% for field in form %}
            <div class="mb-3">
-              {{ field.label_tag}}
-              {{ field }}
+              {% bootstrap_field field %}
            </div> 
         {% endfor %}
 
-        <input class="btn btn-primary" type="submit" value="Submit">
-        <a class="btn btn-secondary" href="{% url 'landing' %}">Cancel</a>
+        {% buttons %}
+        <div class='row justify-content-center'>
+            <input class="btn btn-primary mx-1" type="submit" value="Submit">
+            <a class="btn btn-secondary mx-1" href="{% url 'rental_create' %}">Cancel</a>
+        </div>
+        
+        {% endbuttons %}
     </form>
 </div>
 {% endblock %}

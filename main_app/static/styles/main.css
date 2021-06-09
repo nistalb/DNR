@@ -33,3 +33,9 @@ header {
 footer {
     background-color: rgb(0, 58, 109);
 }
+
+td, th {
+    text-align: center;
+    vertical-align: center;
+}
+

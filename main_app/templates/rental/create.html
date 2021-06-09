@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+
+<div class="container">
+    <div class="form">
+        <h2 class='row justify-content-center mt-4'>Add Rental Equipment</h2>
+        <form action="{% url 'rental_create' %}" method="POST">
+            {% csrf_token %}
+            
+            <div class="form-row">
+                <div class="form-group col-md-8">
+                    {% bootstrap_field rental_form.equipment %}
+                </div>
+                <div class="form-group col-md-4">
+                    {% bootstrap_field rental_form.cost %}
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    {% bootstrap_field rental_form.start_date %}
+                </div>
+                <div class="form-group col-md-6">
+                    {% bootstrap_field rental_form.end_date %}
+                </div>
+            </div>
+
+            {% buttons %}
+            <div class="row justify-content-center">
+                <input class="btn btn-primary mx-1" type="submit" value="Add">
+            </div>
+            {% endbuttons %}
+        </form>
+    </div>
+    <hr>
+    <div class="form">
+        <h2 class="row justify-content-center mt-5">Rental Log</h2>
+        <table class="table table-bordered">
+            <thead>
+                <th>Equipment</th>
+                <th>Cost ($)</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+            </thead>
+            {% if rental %}
+                {% for rental in rental %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'rental_edit' pk=rental.pk %}">{{ rental.equipment }}</a> 
+                        </td>
+                        <td>{{ rental.cost }}</td>
+                        <td>{{ rental.start_date }}</td>
+                        <td>{{ rental.end_date }}</td>
+                        <td><a href="{% url 'rental_delete' pk=rental.pk %}">Delete</a></td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            {% endif %}
+        </table>
+        <p>* Click on a piece of equipment to edit the entry</p>
+    </div>
+    
+</div>
+{% endblock %}

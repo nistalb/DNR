@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="container">
+    <p class="row justify-content-center mt-4">Are you sure you want to delete "{{ object }}"?</p>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="row justify-content-center">
+                <input class='btn btn-danger mx-1' type="submit" value="Confirm" />
+                <a href="{% url 'rental_create' %}" class='btn btn-secondary mx-1'>Cancel</a>
+            </div>
+        </form>
+  </div>
+  
+{% endblock %}

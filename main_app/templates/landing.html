@@ -2,55 +2,18 @@
 {% block content %}
 
 <div id="content" class="container">
-    <div>
+    <div class='mt-4'>
         <h3>Project Owner: {{ user.first_name|capfirst }} {{user.last_name|capfirst}}</h3>
         <p>Project Description: {{ project.description }} </p>
-        <p>Initiated On: {{ project.date }}</p>
-        <p>Expiration Date: {{ project.expiration_date }}</p>
+        <p>Project Initiation Date: {{ project.date }}</p>
+        <p>Project Expiration Date: {{ project.expiration_date }}</p>
         <p>Reimbursement Target: ${{ project.reimbursement }}</p>
+        <p>You have {{project.expiration_date|timeuntil}} to complete your project</p>
     </div>
     <div>
-        <p>Address: {{ project.street }}, {{ project.city }}, {{ project.state }} {{ project.zip_code }}</p>
+        <p>Project Address: {{ project.street }}, {{ project.city }}, {{ project.state }} {{ project.zip_code }}</p>
         <a href="{% url 'project_edit' pk=project.pk %}">Edit Project</a>
     </div>
-
-
-    
-
-    
-
-    <div class="form">
-        <form action="{% url 'rental_create' %}" method="POST">
-            {% csrf_token %}
-            <h4>Add Rental Equipment</h4>
-            {{rental_form.as_p}}
-            <input type="submit" value='Submit'>
-        </form>
-    </div>
-
-    {% if rental %}
-    <div class="form">
-        <table class="table table-bordered">
-            <thead>
-                <th>Equipment</th>
-                <th>Cost ($)</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-            </thead>
-            {% for rental in rental %}
-                <tr>
-                    <td>
-                        <a href="{% url 'rental_edit' rental_id=rental.id %}">{{ rental.equipment }}</a> 
-                    </td>
-                    <td>{{ rental.cost }}</td>
-                    <td>{{ rental.start_date }}</td>
-                    <td>{{ rental.end_date }}</td>
-                </tr>
-            {% endfor %}
-        </table>
-        <p>* Click on a piece of equipment to edit the entry</p>
-    </div>
-    {% endif %}
 </div>
 
 {% endblock %}
