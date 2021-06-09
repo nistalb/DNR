@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load bootstrap4%}
 
 {% block content %}
 <div class="container">
@@ -6,29 +7,36 @@
         <form action="{% url 'labor_create' %}" method="POST">
             {% csrf_token %}
             <h2 class='row justify-content-center mt-4'>Add Labor</h2>
-            <table class="table table-bordered">
-                <thead>
-                    <th>Date</th>
-                    <th>Total Hours</th>
-                    <th>Chainsaw Hours</th>
-                    <th>Small Equipment Hours</th>
-                    <th>Large Equipment Hours</th>
-                </thead>
-                <tr>
-                    <td>{{ labor_form.date }}</td>
-                    <td>{{ labor_form.total_hours }}</td>
-                    <td>{{ labor_form.chainsaw_hours }}</td>
-                    <td>{{ labor_form.small_equip_hours }}</td>
-                    <td>{{ labor_form.large_equip_hours }}</td>
-                    
-                </tr>
-            </table>
-            <div class="row justify-content-center">
-                <input class='btn btn-primary' type="submit" value='Add'>
+            
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    {% bootstrap_field labor_form.date %}
+                </div>
+                <div class="form-group col-md-6">
+                    {% bootstrap_field labor_form.total_hours %}
+                </div>
             </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    {% bootstrap_field labor_form.chainsaw_hours %}
+                </div>
+                <div class="form-group col-md-4">
+                    {% bootstrap_field labor_form.small_equip_hours %}
+                </div>
+                <div class="form-group col-md-4">
+                    {% bootstrap_field labor_form.large_equip_hours %}
+                </div>
+            </div>
+
+            {% buttons %}        
+                <div class="row justify-content-center">
+                    <input class='btn btn-primary' type="submit" value='Add'>
+                </div>
+            {% endbuttons %}
         </form>
     </div>
-
+    <hr>
     <div>
         <h2 class="row justify-content-center mt-5">Labor Log</h2>
         <table class="table table-bordered">
