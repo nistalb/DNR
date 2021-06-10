@@ -3,18 +3,18 @@
 
 {% block content %}
     <div class="container edit_form">
-        <h1 class='row justify-content-center mt-4'>Log In</h1>
+        <h1 class='text-center mt-4'>Log In</h1>
         <form class='form' method="POST">
             {% csrf_token %}
             {% bootstrap_form form %}
             {% buttons %}
-                <div class='row justify-content-center'>
+                <div class='text-center'>
                     <button type='submit' class='btn btn-primary'>Login</button>
                 </div>
             {% endbuttons %}
         </form>
         <hr class='mt-4 mb-3'>
-        <p class='row justify-content-center'>Not a member yet?<span>
+        <p class='text-center'>Not a member yet?<span>
             <a href="{% url 'register' %}">&nbsp Register</a>
         </span></p>
     </div>

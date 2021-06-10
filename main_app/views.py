@@ -44,10 +44,22 @@ def landing(request):
     if request.user.id in Project.objects.values_list('owner_id', flat=True):
         user = User.objects.get(id=request.user.id)
         project = Project.objects.get(owner_id=request.user.id)
-        rental_sum = Rental.objects.filter(project_id=project.id).aggregate(Sum('cost'))['cost__sum']
         pdf = project.pdf_set.all()
         pdf_form = PdfForm()
-        context = {'user': user, 'project': project, 'rental_sum': rental_sum, 'pdf_form': pdf_form, 'pdf': pdf}
+        
+        # summary costs
+        rental_sum = Rental.objects.filter(project_id=project.id).aggregate(Sum('cost'))['cost__sum']
+        total_hours_cost = 25 * Labor.objects.filter(project_id=project.id).aggregate(Sum('total_hours'))['total_hours__sum']
+        chainsaw_hours_cost = 8 * Labor.objects.filter(project_id=project.id).aggregate(Sum('chainsaw_hours'))['chainsaw_hours__sum']
+        small_equipment_hours_cost = 20 * Labor.objects.filter(project_id=project.id).aggregate(Sum('small_equip_hours'))['small_equip_hours__sum']
+        large_equipment_hours_cost = 60 * Labor.objects.filter(project_id=project.id).aggregate(Sum('large_equip_hours'))['large_equip_hours__sum']
+        total_labor_cost = total_hours_cost + chainsaw_hours_cost + small_equipment_hours_cost + large_equipment_hours_cost
+        total_cost = rental_sum + total_labor_cost
+
+        # for status bar
+        completion = (total_cost / (project.reimbursement* 2)) * 100
+
+        context = {'user': user, 'project': project, 'rental_sum': rental_sum, 'pdf_form': pdf_form, 'pdf': pdf, "labor_cost": total_labor_cost, 'total_cost': total_cost, 'completion': completion}
         return render(request, 'landing.html', context)
     else:
         return redirect('project_create')

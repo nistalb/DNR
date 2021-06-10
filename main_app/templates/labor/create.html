@@ -6,7 +6,7 @@
     <div class="form">
         <form action="{% url 'labor_create' %}" method="POST">
             {% csrf_token %}
-            <h2 class='row justify-content-center mt-4'>Add Labor</h2>
+            <h2 class='text-center mt-4'>Add Labor</h2>
             
             <div class="form-row">
                 <div class="form-group col-md-6">
@@ -30,7 +30,7 @@
             </div>
 
             {% buttons %}        
-                <div class="row justify-content-center">
+                <div class="text-center">
                     <input class='btn btn-primary' type="submit" value='Add'>
                 </div>
             {% endbuttons %}
@@ -38,7 +38,7 @@
     </div>
     <hr>
     <div>
-        <h2 class="row justify-content-center mt-5">Labor Log</h2>
+        <h2 class="text-center mt-5">Labor Log</h2>
         <table class="table table-bordered">
             <thead>
                 <th>Date</th>

@@ -5,7 +5,7 @@
 
 <div class="container">
     <div class="form">
-        <h2 class='row justify-content-center mt-4'>Add Rental Equipment</h2>
+        <h2 class='text-center mt-4'>Add Rental Equipment</h2>
         <form action="{% url 'rental_create' %}" method="POST">
             {% csrf_token %}
             
@@ -28,7 +28,7 @@
             </div>
 
             {% buttons %}
-            <div class="row justify-content-center">
+            <div class="text-center">
                 <input class="btn btn-primary mx-1" type="submit" value="Add">
             </div>
             {% endbuttons %}
@@ -36,7 +36,7 @@
     </div>
     <hr>
     <div class="form">
-        <h2 class="row justify-content-center mt-5">Rental Log</h2>
+        <h2 class="text-center mt-5">Rental Log</h2>
         <table class="table table-bordered">
             <thead>
                 <th>Equipment</th>

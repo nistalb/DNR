@@ -4,19 +4,32 @@
 {% block content %}
 
 <div id="content" class="container">
-    <div class='mt-4'>
-        <h3>Project Owner: {{ user.first_name|capfirst }} {{user.last_name|capfirst}}</h3>
-        <p>Project Description: {{ project.description }} </p>
-        <p>Project Initiation Date: {{ project.date }}</p>
-        <p>Project Expiration Date: {{ project.expiration_date }}</p>
-        <p>Reimbursement Target: ${{ project.reimbursement }}</p>
-        <p>You have <strong>{{project.expiration_date|timeuntil}}</strong> to complete your project</p>
-    </div>
-    <div>
-        <p>Project Address: {{ project.street }}, {{ project.city }}, {{ project.state }} {{ project.zip_code }}</p>
-        <a href="{% url 'project_edit' pk=project.pk %}">Edit Project</a>
+    <div class="jumbotron py-3">
+        <div >
+            <h3 class='text-center mb-4'>Project Details</h3>
+            <p >Project Owner: {{ user.first_name|capfirst }} {{user.last_name|capfirst}}</p>
+            <p>Project Address: {{ project.street }}, {{ project.city }}, {{ project.state }} {{ project.zip_code }}</p>
+            <p>Project Initiation Date: {{ project.date }}</p>
+            <p>Project Expiration Date: {{ project.expiration_date }}</p>
+            <p>Project Description: {{ project.description }} </p>
+            <p class='h6 my-4 text-center'>You have <strong>{{project.expiration_date|timeuntil}}</strong> to complete your project and receive the maximum reimbursement amount of <strong>${{ project.reimbursement }}</strong>.</p>
+            
+            <a href="{% url 'project_edit' pk=project.pk %}">Edit Project Details</a>
+        </div>
     </div>
     
+    
+
+    <p class='text-justify'>The total cost for the project is <strong>${{total_cost}}</strong> so far.  You have spent <strong>${{rental_sum}}</strong> on rental equipment and the amount earned on your labor and equipment is <strong>${{labor_cost}}0</strong>.</p>
+    
+    <div class="progress mt-4">
+        <div class="progress-bar" role='progressbar' style='width: {{completion}}%' aria-valuenow='24' aria-valuemin='0' aria-valuemax='100'>${{total_cost}}</div>    
+    </div>
+    <div class="text-center">
+        <p>This progress bar indicates your progress toward meeting your project cost goal of 2X the maximum reimbursement amount.</p>
+    </div>
+        
+
     {% for pdf in pdf %}
         <p>Click <span><a href="{{pdf.url}}">Here</a></span> to view your cost share application from the DNR.</p>
         <p>Click <span><a href="{% url 'delete_pdf' pk=pdf.pk %}">Here</a></span> if you want to delete the file and upload another.</p> 
@@ -35,6 +48,8 @@
             </form>
         </div>
     {% endfor %}
+
 </div>
+
 
 {% endblock %}
