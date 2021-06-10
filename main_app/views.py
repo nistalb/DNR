@@ -6,10 +6,18 @@ from django.urls import reverse_lazy
 from django.db.models import Sum
 
 # import forms
-from .forms import UserCreateForm, ProjectForm, LaborForm, RentalForm
+from .forms import UserCreateForm, ProjectForm, LaborForm, RentalForm, PdfForm
 
 # import models
-from .models import User, Project, Labor, Rental
+from .models import User, Project, Labor, Rental, PDF
+
+# AWS imports
+import boto3
+import uuid
+
+# AWS Constants
+S3_BASE_URL = 'https://s3-us-west-2.amazonaws.com/'
+BUCKET = 'country-mechanic'
 
 # Create your views here.
 
@@ -37,7 +45,9 @@ def landing(request):
         user = User.objects.get(id=request.user.id)
         project = Project.objects.get(owner_id=request.user.id)
         rental_sum = Rental.objects.filter(project_id=project.id).aggregate(Sum('cost'))['cost__sum']
-        context = {'user': user, 'project': project, 'rental_sum': rental_sum}
+        pdf = project.pdf_set.all()
+        pdf_form = PdfForm()
+        context = {'user': user, 'project': project, 'rental_sum': rental_sum, 'pdf_form': pdf_form, 'pdf': pdf}
         return render(request, 'landing.html', context)
     else:
         return redirect('project_create')
@@ -114,3 +124,43 @@ class RentalDeleteView(DeleteView):
     model = Rental
     success_url = reverse_lazy('rental_create')
     # uses default template at main_app/rental_confirm_delete.html
+
+# ==== PDF ====
+def add_pdf(request, pk):
+    # photo-file will be the "name" attribute on the <input type="file">
+    pdf_file = request.FILES.get('url', None)
+    print(pdf_file)
+    if pdf_file:
+        s3 = boto3.client('s3')
+        # need a unique "key" for S3 / needs pdf file extension too
+        key = uuid.uuid4().hex[:6] + \
+            pdf_file.name[pdf_file.name.rfind('.'):]
+        # just in case something goes wrong
+        try:
+            # adding the ExtraArgs allows the PDF to be opened from an anchor tag
+            s3.upload_fileobj(pdf_file, BUCKET, key, ExtraArgs={'ContentType': 'application/pdf'})
+            # build the full url string
+            url = f"{S3_BASE_URL}{BUCKET}/{key}"
+
+            pdf = PDF(url=url, project_id=pk)
+            pdf.save()
+        except:
+            print('An error occurred uploading file to S3')
+    return redirect('landing')
+
+
+def delete_pdf(request, pk):
+    pdf = PDF.objects.get(pk=pk)
+    # delete the row from psql table
+    pdf.delete()
+    
+    # steps below will delete file from AWS S3
+    s3 = boto3.client('s3')
+    
+    # gets the file name from the url created in add_pdf
+    key = pdf.url[-10:]
+    
+    # deletes the file from AWS S3, must be formatted as shown
+    s3.delete_object(Bucket=BUCKET, Key=key)
+
+    return redirect('landing')

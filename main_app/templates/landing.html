@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load bootstrap4 %}
+
 {% block content %}
 
 <div id="content" class="container">
@@ -8,12 +10,31 @@
         <p>Project Initiation Date: {{ project.date }}</p>
         <p>Project Expiration Date: {{ project.expiration_date }}</p>
         <p>Reimbursement Target: ${{ project.reimbursement }}</p>
-        <p>You have {{project.expiration_date|timeuntil}} to complete your project</p>
+        <p>You have <strong>{{project.expiration_date|timeuntil}}</strong> to complete your project</p>
     </div>
     <div>
         <p>Project Address: {{ project.street }}, {{ project.city }}, {{ project.state }} {{ project.zip_code }}</p>
         <a href="{% url 'project_edit' pk=project.pk %}">Edit Project</a>
     </div>
+    
+    {% for pdf in pdf %}
+        <p>Click <span><a href="{{pdf.url}}">Here</a></span> to view your cost share application from the DNR.</p>
+        <p>Click <span><a href="{% url 'delete_pdf' pk=pdf.pk %}">Here</a></span> if you want to delete the file and upload another.</p> 
+    {% empty %}
+        <div class="row justify-content-center">
+            <form action="{% url 'add_pdf' pk=project.pk %}" class='form' enctype='multipart/form-data' method="POST">
+                {% csrf_token %}
+
+                {% bootstrap_form pdf_form %}
+
+                {% buttons %}
+                    <div class="row justify-content-center">
+                        <button type="submit" class='btn btn-primary mx-1'>Submit</button>
+                    </div>
+                {% endbuttons %}
+            </form>
+        </div>
+    {% endfor %}
 </div>
 
 {% endblock %}

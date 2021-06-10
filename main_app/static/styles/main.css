@@ -39,3 +39,6 @@ td, th {
     vertical-align: center;
 }
 
+hr {
+    border-top: 2px solid black;
+}

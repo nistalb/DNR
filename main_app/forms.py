@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django.forms.widgets import DateInput, EmailInput, FileInput, NumberInput, PasswordInput, TextInput, Textarea, URLInput
-from .models import User, Project, Labor, Rental 
+from .models import User, Project, Labor, Rental, PDF 
 
 from django.contrib.auth.forms import UserCreationForm
 
@@ -14,10 +14,9 @@ class UserCreateForm(UserCreationForm):
 class ProjectForm(ModelForm):
     class Meta:
         model = Project
-        fields = ('description', 'date', 'url', 'street', 'city', 'state', 'zip_code', 'reimbursement', 'expiration_date')
-        labels = {'date': 'Date Initiated', 'url': 'PDF Upload'}
-        widgets = {'url': FileInput,
-                    'date': DateInput(attrs={'class': 'datepicker'}),
+        fields = ('description', 'date', 'street', 'city', 'state', 'zip_code', 'reimbursement', 'expiration_date')
+        labels = {'date': 'Date Initiated'}
+        widgets = { 'date': DateInput(attrs={'class': 'datepicker'}),
                     'expiration_date': DateInput(attrs={'class': 'datepicker'}),
                     'description': Textarea(attrs={'rows':3, 'cols':15})
                     }
@@ -39,3 +38,10 @@ class RentalForm(ModelForm):
                     'start_date': DateInput(attrs={'class': 'datepicker form-control'}),
                     'end_date': DateInput(attrs={'class': 'datepicker form-control'}),
                     }
+
+class PdfForm(ModelForm):
+    class Meta:
+        model = PDF
+        fields = ('url',)
+        labels = {'url': 'PDF Upload'}
+        widgets = {'url': FileInput,}
