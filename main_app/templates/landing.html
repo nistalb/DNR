@@ -29,12 +29,14 @@
         <p>This progress bar indicates your progress toward meeting your project cost goal of 2X the maximum reimbursement amount.</p>
     </div>
         
+    {% if not pdf %}
+        <p id="pdf_span_holder" class='mt-4'>Click <span id='add_pdf'>Here</span> if you want to add the pdf version of your cost share applicaiton.</p>
+    {% endif %}
 
     {% for pdf in pdf %}
-        <p>Click <span><a href="{{pdf.url}}">Here</a></span> to view your cost share application from the DNR.</p>
-        <p>Click <span><a href="{% url 'delete_pdf' pk=pdf.pk %}">Here</a></span> if you want to delete the file and upload another.</p> 
+        <p class="mt-5">Click <span><a href="{{pdf.url}}">Here</a></span> to view your cost share application.  If you uploaded the wrong file or have an updated file click <span><a href="{% url 'delete_pdf' pk=pdf.pk %}">Here</a></span> to delete the current file. </p> 
     {% empty %}
-        <div class="row justify-content-center">
+        <div id='add_pdf_div' class="row justify-content-center" style="visibility: hidden;">
             <form action="{% url 'add_pdf' pk=project.pk %}" class='form' enctype='multipart/form-data' method="POST">
                 {% csrf_token %}
 
@@ -42,9 +44,10 @@
 
                 {% buttons %}
                     <div class="row justify-content-center">
-                        <button type="submit" class='btn btn-primary mx-1'>Submit</button>
+                        <button id="submit_pdf" type="submit" class='btn btn-primary mx-1'>Submit</button>
                     </div>
                 {% endbuttons %}
+                <p id="wait_message" style="visibility: hidden;">This may take a bit...please be patient.</p>
             </form>
         </div>
     {% endfor %}

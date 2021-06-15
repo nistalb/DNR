@@ -42,3 +42,7 @@ td, th {
 hr {
     border-top: 2px solid black;
 }
+
+#add_pdf {
+    color: red;
+}

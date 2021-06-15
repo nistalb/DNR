@@ -48,14 +48,25 @@ def landing(request):
         pdf_form = PdfForm()
         
         # summary costs
-        rental_sum = Rental.objects.filter(project_id=project.id).aggregate(Sum('cost'))['cost__sum']
-        total_hours_cost = 25 * Labor.objects.filter(project_id=project.id).aggregate(Sum('total_hours'))['total_hours__sum']
-        chainsaw_hours_cost = 8 * Labor.objects.filter(project_id=project.id).aggregate(Sum('chainsaw_hours'))['chainsaw_hours__sum']
-        small_equipment_hours_cost = 20 * Labor.objects.filter(project_id=project.id).aggregate(Sum('small_equip_hours'))['small_equip_hours__sum']
-        large_equipment_hours_cost = 60 * Labor.objects.filter(project_id=project.id).aggregate(Sum('large_equip_hours'))['large_equip_hours__sum']
-        total_labor_cost = total_hours_cost + chainsaw_hours_cost + small_equipment_hours_cost + large_equipment_hours_cost
-        total_cost = rental_sum + total_labor_cost
+        rental = Rental.objects.filter(project_id=project.id)
+        labor = Labor.objects.filter(project_id=project.id)
 
+        if rental:
+            rental_sum = Rental.objects.filter(project_id=project.id).aggregate(Sum('cost'))['cost__sum']
+        else:
+            rental_sum = 0
+                
+        if labor:
+            total_hours_cost = 25 * Labor.objects.filter(project_id=project.id).aggregate(Sum('total_hours'))['total_hours__sum']
+            chainsaw_hours_cost = 8 * Labor.objects.filter(project_id=project.id).aggregate(Sum('chainsaw_hours'))['chainsaw_hours__sum']
+            small_equipment_hours_cost = 20 * Labor.objects.filter(project_id=project.id).aggregate(Sum('small_equip_hours'))['small_equip_hours__sum']
+            large_equipment_hours_cost = 60 * Labor.objects.filter(project_id=project.id).aggregate(Sum('large_equip_hours'))['large_equip_hours__sum']
+            total_labor_cost = total_hours_cost + chainsaw_hours_cost + small_equipment_hours_cost + large_equipment_hours_cost
+        else:
+            total_labor_cost = 0
+        
+        total_cost = rental_sum + total_labor_cost
+        
         # for status bar
         completion = (total_cost / (project.reimbursement* 2)) * 100
 
