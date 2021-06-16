@@ -100,11 +100,13 @@ def labor_create(request):
     labor = Labor.objects.filter(project_id=project.id)
     if request.method == 'POST':
         labor_form = LaborForm(request.POST)
-        if labor_form.is_valid:
+        if labor_form.is_valid():
             labor = labor_form.save(commit=False)
             labor.project = project
             labor.save()
             return redirect('labor_create')
+        else:
+            return render(request, 'labor/create.html', {'labor_form': labor_form, 'labor':labor})
 
     labor_form = LaborForm()
     context = {'labor_form': labor_form, 'labor': labor}
@@ -127,7 +129,7 @@ def rental_create(request):
     rental = Rental.objects.filter(project_id=project.id)
     if request.method == 'POST':
         rental_form = RentalForm(request.POST)
-        if rental_form.is_valid:
+        if rental_form.is_valid():
             rental = rental_form.save(commit=False)
             rental.project = project
             rental.save()
@@ -152,7 +154,7 @@ class RentalDeleteView(DeleteView):
 def add_pdf(request, pk):
     # photo-file will be the "name" attribute on the <input type="file">
     pdf_file = request.FILES.get('url', None)
-    print(pdf_file)
+
     if pdf_file:
         s3 = boto3.client('s3')
         # need a unique "key" for S3 / needs pdf file extension too
@@ -174,6 +176,7 @@ def add_pdf(request, pk):
 
 def delete_pdf(request, pk):
     pdf = PDF.objects.get(pk=pk)
+    print(pdf.url)
     # delete the row from psql table
     pdf.delete()
     
@@ -181,7 +184,7 @@ def delete_pdf(request, pk):
     s3 = boto3.client('s3')
     
     # gets the file name from the url created in add_pdf
-    key = pdf.url[-10:]
+    key = pdf.url[pdf.url.rindex('/')+1:]
     
     # deletes the file from AWS S3, must be formatted as shown
     s3.delete_object(Bucket=BUCKET, Key=key)
